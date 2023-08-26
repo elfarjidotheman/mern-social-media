@@ -14,13 +14,9 @@ import Fab from '@material-ui/core/Fab';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import Navbar from 'scenes/navbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { config } from "../../config";
+import {env} from "../../config";
 import { setConvs, setMessages } from 'state/chatSlice';
 import UserImage from 'components/UserImage';
-
-
-const URL_ENDPT = `http://${config.host}:${config.port}/`
-
 
 const useStyles = makeStyles({
     table: {
@@ -55,7 +51,7 @@ const Messenger = ({ socket }) => {
     const getConversations = async () => {
         try {
             const response = await fetch(
-                `${URL_ENDPT}conversations/${user._id}`,
+                `${env.serverEndpoint()}/conversations/${user._id}`,
                 {
                     method: "GET",
                     headers: { Authorization: `Bearer ${token}` },
@@ -70,7 +66,7 @@ const Messenger = ({ socket }) => {
 
     const handleClickToChat = async (convId) => {
         const response = await fetch(
-            `http://localhost:3001/messages/${convId}`,
+            `${env.serverEndpoint()}/messages/${convId}`,
             {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` },
@@ -86,7 +82,7 @@ const Messenger = ({ socket }) => {
     const handleSendMsg = async () => {
         if (!msgInput.replace(/\s/g, '')) return alert("Write something before sending");
         const response = await fetch(
-            `http://localhost:3001/messages/`,
+            `${env.serverEndpoint()}/messages/`,
             {
                 method: "POST",
                 body: JSON.stringify({ conversationId: currentConv, sender: user._id, text: msgInput }),

@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts, setUsers } from "state";
 import PostWidget from "./PostWidget";
-import { config } from "../../config";
-const SERVER_URL_ENDPOINT = `http://${config.host}:${config.port}`
+import {env} from "../../config";
+
 
 const PostsWidget = ({ userId, socket, isProfile = false, setPostTimeDiff }) => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const PostsWidget = ({ userId, socket, isProfile = false, setPostTimeDiff }) => 
   const token = useSelector((state) => state.authReducer.token);
 
   const getUsers = async () => {
-    const resposnse = await fetch(SERVER_URL_ENDPOINT+"/users", {
+    const resposnse = await fetch(env.serverEndpoint()+"/users", {
       method:"GET",
       headers: {Authorization:`Bearer ${token}`}
     })
@@ -19,7 +19,7 @@ const PostsWidget = ({ userId, socket, isProfile = false, setPostTimeDiff }) => 
     dispatch(setUsers(users))
   }
   const getPosts = async () => {
-    const response = await fetch(SERVER_URL_ENDPOINT+"/posts", {
+    const response = await fetch(env.serverEndpoint()+"/posts", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -30,7 +30,7 @@ const PostsWidget = ({ userId, socket, isProfile = false, setPostTimeDiff }) => 
 
   const getUserPosts = async () => {
     const response = await fetch(
-      `${SERVER_URL_ENDPOINT}/posts/${userId}/posts`,
+      `${env.serverEndpoint()}/posts/${userId}/posts`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

@@ -29,10 +29,10 @@ import { Link, useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import { setConvs, setNewMsgCount, setSearchValue } from "state/chatSlice";
 import SearchDropdownWidget from "scenes/widgets/SearchDropdownWidget";
-import { config } from "../../config";
-const URL_ENDPT = `http://${config.host}:${config.port}/`
+import  {env}  from "../../config";
 
-const Navbar = ({socket, lowerBodyRef, setPostTimeDiff}) => {
+
+const Navbar = ({socket, lowerBodyRef}) => {
   const [anchorEl, setAnchorEl] = useState(null)
   
   const handleClick = (event) => {
@@ -59,7 +59,6 @@ const Navbar = ({socket, lowerBodyRef, setPostTimeDiff}) => {
   const neutralLight = theme.palette.neutral.light;
   const dark = theme.palette.neutral.dark;
   const background = theme.palette.background.default;
-  const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
   const main = theme.palette.neutral.main;
 
@@ -68,7 +67,7 @@ const Navbar = ({socket, lowerBodyRef, setPostTimeDiff}) => {
   const getConversations = async () => {
     try {
         const response = await fetch(
-            `${URL_ENDPT}conversations/${user._id}`,
+            `${env.serverEndpoint()}/conversations/${user._id}`,
             {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` },
@@ -101,6 +100,7 @@ const Navbar = ({socket, lowerBodyRef, setPostTimeDiff}) => {
 
   useEffect(()=>{
     getConversations()
+    // eslint-disable-next-line
   },[])
 
   useEffect(()=>{
@@ -118,7 +118,7 @@ const Navbar = ({socket, lowerBodyRef, setPostTimeDiff}) => {
         setIsBlurred(false)
       }
     }
-
+// eslint-disable-next-line
   },[socket])
 
   useEffect(()=>{
@@ -131,6 +131,7 @@ const Navbar = ({socket, lowerBodyRef, setPostTimeDiff}) => {
       }
       dispatch(setNewMsgCount(count))
     })
+  // eslint-disable-next-line
   }, [socket, convs])
 
   return (
@@ -152,7 +153,7 @@ const Navbar = ({socket, lowerBodyRef, setPostTimeDiff}) => {
             },
           }}
         >
-          <img src="/assets/logo.png" width="38px" />exus.point
+          <img src="/assets/logo.png" alt="logo" width="38px" />exus.point
         </Typography>
         {isNonMobileScreens && (
           <FlexBetween

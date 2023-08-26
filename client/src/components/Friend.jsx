@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { setFriends } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
+import { env } from "../config";
 
 const Friend = ({ friendId, name, subtitle, userPicturePath, socket, loggedInUserId, postUserId, handleClickToChat, isBeingSearched=false }) => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, socket, loggedInUse
 
   const patchFriend = async () => {
     const response = await fetch(
-      `http://localhost:3001/users/${_id}/${friendId}`,
+      `${env.serverEndpoint()}/users/${_id}/${friendId}`,
       {
         method: "PATCH",
         headers: {
@@ -37,7 +38,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, socket, loggedInUse
     if (isFrnd) handleNotification(3)
     if (!isFrnd) {
       const response = await fetch(
-        `http://localhost:3001/conversations/${_id}/${friendId}`,
+        `${env.serverEndpoint()}/conversations/${_id}/${friendId}`,
         {
           method: "DELETE",
           headers: {
@@ -61,7 +62,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, socket, loggedInUse
 
   const startConversation = async () => {
     const response = await fetch(
-      `http://localhost:3001/conversations/`,
+      `${env.serverEndpoint()}/conversations/`,
       {
         method: "POST",
         body: JSON.stringify({ senderId: _id, receiverId: friendId }),

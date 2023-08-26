@@ -1,20 +1,19 @@
 import './index.css'
 import { Send } from '@mui/icons-material';
-import { Box, Divider, IconButton, InputBase, Paper, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Divider, IconButton, InputBase, Typography, useMediaQuery, useTheme } from '@mui/material'
 import FlexBetween from 'components/FlexBetween';
 import WidgetWrapper from 'components/WidgetWrapper';
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Navbar from 'scenes/navbar'
-import { config } from "../../config";
+import {env} from "config";
 import { setConvs, setMessages, setNewMsgCount } from 'state/chatSlice';
 import UserImage from 'components/UserImage';
 import TouchRipple from '@mui/material/ButtonBase/TouchRipple';
 import FriendListWidget from 'scenes/widgets/FriendListWidget';
 import ThreeDotsDropDown from 'components/ThreeDotsDropDown';
-import ChatBubbles from 'components/ChatBubbles';
 import ChatContainer from 'components/ChatContainer';
-const URL_ENDPT = `http://${config.host}:${config.port}/`
+
 
 const Messenger = ({ socket, setPostTimeDiff }) => {
     const { palette } = useTheme();
@@ -42,7 +41,7 @@ const Messenger = ({ socket, setPostTimeDiff }) => {
     const getConversations = async () => {
         try {
             const response = await fetch(
-                `${URL_ENDPT}conversations/${user._id}`,
+                `${env.serverEndpoint()}/conversations/${user._id}`,
                 {
                     method: "GET",
                     headers: { Authorization: `Bearer ${token}` },
@@ -57,7 +56,7 @@ const Messenger = ({ socket, setPostTimeDiff }) => {
 
     const handleClickToChat = async (convId, lastSender, seen) => {
         const response = await fetch(
-            `http://localhost:3001/messages/${convId}`,
+            `${env.serverEndpoint()}/messages/${convId}`,
             {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` },
@@ -83,7 +82,7 @@ const Messenger = ({ socket, setPostTimeDiff }) => {
         if (!msgInput.replace(/\s/g, '')) return alert("Write something before sending");
         setMsgSeen(false)
         const response = await fetch(
-            `http://localhost:3001/messages/${currentConv}`,
+            `${env.serverEndpoint()}/messages/${currentConv}`,
             {
                 method: "POST",
                 body: JSON.stringify({ conversationId: currentConv, sender: user._id, text: msgInput, seen:false }),
@@ -106,7 +105,7 @@ const Messenger = ({ socket, setPostTimeDiff }) => {
     }
 
     const handleConvoDelete = async (convoId) => {
-        const response = await fetch(`http://localhost:3001/conversations/${convoId}/delete-convo`, {
+        const response = await fetch(`${env.serverEndpoint()}/conversations/${convoId}/delete-convo`, {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -127,7 +126,7 @@ const Messenger = ({ socket, setPostTimeDiff }) => {
     }
     const updateConvo = async(convId)=>{
         try {
-            const resp = await fetch(`http://localhost:3001/conversations/${convId}/update-check/`, {
+            const resp = await fetch(`${env.serverEndpoint()}/conversations/${convId}/update-check/`, {
                 method:"PUT",
                 headers:{
                     Authorization: `Bearer ${token}`,

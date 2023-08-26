@@ -3,7 +3,6 @@ import http from "http"
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
 import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -17,20 +16,19 @@ import { createPost } from "./controllers/posts.js";
 import { verifyToken } from "./middleware/auth.js";
 import { Server } from "socket.io";
 import User from "./models/User.js";
-import Post from "./models/Post.js";
-import { users, posts } from "./data/index.js";
 import conversationRouter from './routes/conversations.js'
 import messageRouter from './routes/messages.js'
+import { env } from "./config/config.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-dotenv.config();
+// dotenv.config();
 const app = express();
 const server = http.createServer(app)
 
 //creating an io instance
-const clientURL=process.env.CLIENT_URL
+const clientURL= env.client_url
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -136,9 +134,9 @@ const getOnlineUser = (userId)=>{
 }
 
 /* MONGOOSE SETUP */
-const PORT = process.env.PORT || 6001;
+const PORT = env.PORT || 3001;
 mongoose
-  .connect(process.env.MONGO_URL, {
+  .connect(env.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })

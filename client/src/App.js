@@ -9,7 +9,7 @@ import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import Messenger from "scenes/Messenger/index22";
 import {io} from "socket.io-client"
-import { config } from "./config";
+import { env } from "./config";
 import dayjs from "dayjs";
 
 function App() {
@@ -44,7 +44,7 @@ function App() {
   }
 
   useEffect(()=>{
-    setSocket(io(`http://${config.host}:${config.port}`))
+    setSocket(io(env.serverEndpoint()))
     
   },[])
 

@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { env } from "config";
 
 const UserImage = ({ image, size = "60px", mr=0 }) => {
   return (
@@ -8,7 +9,7 @@ const UserImage = ({ image, size = "60px", mr=0 }) => {
         width={size}
         height={size}
         alt="user"
-        src={`http://localhost:3001/assets/${image}`}
+        src={`${env.serverEndpoint()}/assets/${image}`}
       />
     </Box>
   );
