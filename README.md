@@ -24,7 +24,8 @@
     - <s> Time duration of posts </s>
     - <s>add comment on enter</s>
     - <s>added timestamps to comments</s>
-    - fix screen height & scroll
+    - <s>fix screen height & scroll</s>
+    - infinite scrolling
 
 
 - Navbar component

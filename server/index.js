@@ -79,6 +79,7 @@ io.on('connection', (socket) => {
   socket.on("send-notification", async ({senderId, receiverId, type})=>{
     const receiver = getOnlineUser(receiverId)
     const user = await User.findById(senderId)
+    if (!receiver) return
     io.to(receiver.socketId).emit("get-notification", {userName:user.firstName, type})
   })
 

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts, setUsers } from "state";
 import PostWidget from "./PostWidget";
@@ -9,6 +9,9 @@ const PostsWidget = ({ userId, socket, isProfile = false, setPostTimeDiff }) => 
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.authReducer.posts);
   const token = useSelector((state) => state.authReducer.token);
+  const [pageNo, setPageNo] = useState(0)
+
+  
 
   const getUsers = async () => {
     const resposnse = await fetch(env.serverEndpoint()+"/users", {
@@ -19,7 +22,7 @@ const PostsWidget = ({ userId, socket, isProfile = false, setPostTimeDiff }) => 
     dispatch(setUsers(users))
   }
   const getPosts = async () => {
-    const response = await fetch(env.serverEndpoint()+"/posts", {
+    const response = await fetch(env.serverEndpoint()+"/posts?pageNo="+pageNo, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });

@@ -11,6 +11,7 @@ import Messenger from "scenes/Messenger/index22";
 import {io} from "socket.io-client"
 import { env } from "./config";
 import dayjs from "dayjs";
+import SearchResults from "scenes/SearchResults";
 
 function App() {
   const mode = useSelector((state) => state.authReducer.mode);
@@ -67,6 +68,10 @@ function App() {
             <Route 
               path="/messenger"
               element={isAuth ? <Messenger setPostTimeDiff={setPostTimeDiff} socket={socket} /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/search-results"
+              element={isAuth ? <SearchResults/> : <Navigate to="/" />}
             />
             
           </Routes>

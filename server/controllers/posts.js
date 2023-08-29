@@ -30,8 +30,16 @@ export const createPost = async (req, res) => {
 
 /* READ */
 export const getFeedPosts = async (req, res) => {
+  const {pageNo} = req.query
+  console.log(pageNo)
+  let post;
   try {
-    const post = await Post.find();
+    if(pageNo !== undefined){
+      post = await Post.find().skip(pageNo).limit(10)
+    }else{
+      post = await Post.find();
+    }
+
     
     res.status(200).json(post);
   } catch (err) {

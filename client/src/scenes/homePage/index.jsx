@@ -8,25 +8,27 @@ import PostsWidget from "scenes/widgets/PostsWidget";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import { useEffect, useRef } from "react";
-import dayjs from 'dayjs';
 
 
-const HomePage = ({socket, setPostTimeDiff}) => {
+const HomePage = ({ socket, setPostTimeDiff }) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, picturePath } = useSelector((state) => state.authReducer.user);
   const lowerBodyRef = useRef(null)
-  const handleScroll = ()=>{
-    console.log('scrolling...')
-  }
 
-  
-  
-  useEffect(()=>{
+  const handleScroll = (e)=>{
+    console.log("handle scroll")
+    if (e.target.offsetHeight + e.target.scrollTop === e.target.scrollHeight) {
+      console.log("inside scroll")
+      
+      return;
+    }
+  }
+  useEffect(() => {
     socket?.emit("new-user", _id)
-  },[socket, _id])
+  }, [socket, _id])
 
   return (
-    <Box    
+    <Box
       height="100vh"
     >
       <Navbar socket={socket} setPostTimeDiff={setPostTimeDiff} lowerBodyRef={lowerBodyRef} />
@@ -44,14 +46,15 @@ const HomePage = ({socket, setPostTimeDiff}) => {
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
-          style={{overflowY:"scroll", height: '100vh'}}
+          style={{ overflowY: "scroll", height: '85vh' }}
+          onScroll={(e)=> handleScroll(e)}
           className="mypost-box"
         >
           <MyPostWidget picturePath={picturePath} />
           <PostsWidget setPostTimeDiff={setPostTimeDiff} userId={_id} socket={socket} />
         </Box>
         {isNonMobileScreens && (
-          <Box flexBasis="26%" style={{overflowY:"scroll", height:"100vh", paddingBottom:"2rem"}} 
+          <Box flexBasis="26%" style={{ overflowY: "scroll", height: "85vh", paddingBottom: "2rem" }}
             className="adv-friend-box">
             <AdvertWidget />
             <Box m="2rem 0" />
