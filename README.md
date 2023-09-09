@@ -36,6 +36,7 @@
     - <s>notification count on new message</s>
 
 - Profile page
-    - fix reload problem
+    - <s>fix reload problem</s>
+    - add social media links to the social media icons
     
 

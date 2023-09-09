@@ -81,7 +81,7 @@ const PostsWidget = ({ userId, socket, isProfile = false, setPostTimeDiff }) => 
             picturePath={picturePath}
             userPicturePath={userPicturePath}
             likes={likes}
-            comments={comments.slice().reverse()}
+            comments={comments?.slice().reverse()}
             createdAt={createdAt}
             getPosts={getPosts}
             socket={socket}
