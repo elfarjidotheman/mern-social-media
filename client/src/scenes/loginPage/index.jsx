@@ -1,10 +1,18 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-  
+  useEffect(()=>{
+    const token = JSON.parse(JSON.parse(window.localStorage.getItem("persist:root")).authReducer).token;
+    if(token){
+      navigate("/home")
+    }
+  },[])
   return (
     <Box>
       <Box

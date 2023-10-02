@@ -9,7 +9,10 @@ const config = {
 
         mongoURI:process.env.MONGO_URI,
         client_url:process.env.CLIENT_URL,
-        jwtSecret:process.env.JWT_SECRET
+        jwtSecret:process.env.JWT_SECRET,
+        cloudinary_cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
+        cloudinary_api_key:process.env.CLOUDINARY_API_KEY,
+        cloudinary_api_secret:process.env.CLOUDINARY_API_SECRET
     },
     prod:{}
 }

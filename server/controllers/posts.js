@@ -6,6 +6,7 @@ import dayjs from "dayjs"
 /* CREATE */
 export const createPost = async (req, res) => {
   try {
+    console.log(req.file)
     const { userId, description, picturePath } = req.body;
     const user = await User.findById(userId);
     const newPost = new Post({
@@ -15,7 +16,7 @@ export const createPost = async (req, res) => {
       location: user.location,
       description,
       userPicturePath: user.picturePath,
-      picturePath,
+      picturePath:req.file.path,
       likes: {},
       comments: [],
     });

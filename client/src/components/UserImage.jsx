@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { env } from "config";
 
 const UserImage = ({ image, size = "60px", mr=0 }) => {
   return (
@@ -9,7 +8,12 @@ const UserImage = ({ image, size = "60px", mr=0 }) => {
         width={size}
         height={size}
         alt="user"
-        src={`${env.serverEndpoint()}/assets/${image}`}
+        src={`${image}`}
+        onError={({target})=>{
+          console.log('curr tr', target)
+          // target.onerror = null
+          target.src = `/assets/default.jpg`
+        }}
       />
     </Box>
   );

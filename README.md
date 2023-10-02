@@ -26,6 +26,7 @@
     - <s>added timestamps to comments</s>
     - <s>fix screen height & scroll</s>
     - infinite scrolling
+    - <s>store images in cloud storage instead of backend</s>
 
 
 - Navbar component

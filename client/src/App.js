@@ -36,7 +36,7 @@ function App() {
     if(months > 0) return `${months}mo`
     if(weeks > 0) return `${weeks}w`
     if(days > 0) return `${days}d`
-    if(hours != 0){
+    if(hours !== 0){
       return `${hours}h`
     }else if(hours === 0 && minutes !== 0){
       return `${minutes}m`

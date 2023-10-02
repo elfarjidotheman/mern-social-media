@@ -7,13 +7,15 @@ import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import AdvertWidget from "scenes/widgets/AdvertWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import Skeleton from 'react-loading-skeleton';
 
 
 const HomePage = ({ socket, setPostTimeDiff }) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, picturePath } = useSelector((state) => state.authReducer.user);
   const lowerBodyRef = useRef(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   const handleScroll = (e)=>{
     console.log("handle scroll")
@@ -25,6 +27,8 @@ const HomePage = ({ socket, setPostTimeDiff }) => {
   }
   useEffect(() => {
     socket?.emit("new-user", _id)
+    
+    console.log()
   }, [socket, _id])
 
   return (
@@ -41,7 +45,7 @@ const HomePage = ({ socket, setPostTimeDiff }) => {
         ref={lowerBodyRef}
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined} >
-          <UserWidget userId={_id} picturePath={picturePath} />
+          <UserWidget userId={_id} picturePath={picturePath} isLoading={isLoading} setIsLoading={setIsLoading} />
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
