@@ -7,8 +7,10 @@ body,
   height: 100%;
   width: 100%;
   font-family: "Rubik", sans-serif;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
+
+
 
 .navtitle{
   font-weight:"bold";
