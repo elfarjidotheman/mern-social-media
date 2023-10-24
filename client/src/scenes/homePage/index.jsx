@@ -58,10 +58,10 @@ const HomePage = ({ socket, setPostTimeDiff }) => {
           <PostsWidget setPostTimeDiff={setPostTimeDiff} userId={_id} socket={socket} />
         </Box>
         {isNonMobileScreens && (
-          <Box flexBasis="26%" style={{ overflowY: "scroll", height: "85vh", paddingBottom: "2rem" }}
+          <Box flexBasis="26%" style={{ height: "85vh", paddingBottom: "2rem" }}
             className="adv-friend-box">
-            <AdvertWidget />
-            <Box m="2rem 0" />
+            {/* <AdvertWidget /> */}
+            {/* <Box m="2rem 0" /> */}
             <FriendListWidget userId={_id} />
           </Box>
         )}

@@ -11,6 +11,7 @@ import UserWidget from "scenes/widgets/UserWidget";
 
 const ProfilePage = ({setPostTimeDiff}) => {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true)
   const { userId } = useParams();
   const token = useSelector((state) => state.authReducer.token);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -41,7 +42,7 @@ const ProfilePage = ({setPostTimeDiff}) => {
         justifyContent="center"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={userId} picturePath={user.picturePath} />
+          <UserWidget userId={userId} picturePath={user.picturePath} setIsLoading={setIsLoading} />
           <Box m="2rem 0" />
           <FriendListWidget userId={userId} />
         </Box>
