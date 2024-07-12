@@ -12,12 +12,12 @@ cloudinary.config({
     api_secret: env.cloudinary_api_secret
 });
 
-// export const uploadd = ()=>{
-//     cloudinary.uploader.upload(path.resolve(__dirname, '../public/assets/adog2.jpg'), (err, result)=>{
-//         if(err){
-//             console.log(err)
-//         }else{
-//             console.log(result)
-//         }
-//     })
-// }
+export const uploadd = ()=>{
+    cloudinary.uploader.upload(path.resolve(__dirname, '../public/assets/adog2.jpg'), (err, result)=>{
+        if(err){
+            console.log(err)
+        }else{
+            console.log(result)
+        }
+    })
+}
