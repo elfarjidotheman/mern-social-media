@@ -4,14 +4,16 @@ import {
     IconButton,
     InputBase,
     Typography,
-    Select,
+    //Select,
     MenuItem,
-    FormControl,
+    //FormControl,
     useTheme,
     useMediaQuery,
     Popover,
     Badge,
     Divider,
+    ListItemIcon,
+    ListItemText,
 } from "@mui/material";
 import {
     Search,
@@ -22,6 +24,8 @@ import {
     Help,
     Menu,
     Close,
+    Person,
+    Logout,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
@@ -30,6 +34,7 @@ import FlexBetween from "components/FlexBetween";
 import { setConvs, setNewMsgCount, setSearchValue } from "state/chatSlice";
 import SearchDropdownWidget from "scenes/widgets/SearchDropdownWidget";
 import { env } from "../../config";
+import AvatarMenu from "./AvatarMenu";
 
 const Navbar = ({ socket, lowerBodyRef }) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -141,8 +146,8 @@ const Navbar = ({ socket, lowerBodyRef }) => {
         <FlexBetween
             padding="1rem 6%"
             backgroundColor={alt}
-            // boxShadow="2px 2px 8px black"
-            // boxShadow="2px 2px 2px #e0e0e0"
+        // boxShadow="2px 2px 8px black"
+        // boxShadow="2px 2px 2px #e0e0e0"
         >
             <FlexBetween gap="1.75rem">
                 <Typography
@@ -158,9 +163,9 @@ const Navbar = ({ socket, lowerBodyRef }) => {
                         },
                     }}
                 >
-                  <button title="Nexus.point" style={{cursor:"pointer", background:"transparent", border:"none"}}>
-                    <img src="/assets/logo.png" alt="logo" width="38px" style={{pointerEvents:"none"}} />
-                  </button>
+                    <button title="Nexus.point" style={{ cursor: "pointer", background: "transparent", border: "none" }}>
+                        <img src="/assets/logo.png" alt="logo" width="38px" style={{ pointerEvents: "none" }} />
+                    </button>
                 </Typography>
                 {isNonMobileScreens && (
                     <FlexBetween
@@ -249,6 +254,9 @@ const Navbar = ({ socket, lowerBodyRef }) => {
                     </Popover>
 
                     <Help sx={{ fontSize: "25px" }} />
+                    <AvatarMenu />
+
+                    {/*
                     <FormControl variant="standard" value={fullName}>
                         <Select
                             value={fullName}
@@ -275,6 +283,8 @@ const Navbar = ({ socket, lowerBodyRef }) => {
                             </MenuItem>
                         </Select>
                     </FormControl>
+                    */}
+
                 </FlexBetween>
             ) : (
                 <IconButton
@@ -313,39 +323,66 @@ const Navbar = ({ socket, lowerBodyRef }) => {
                         flexDirection="column"
                         justifyContent="center"
                         alignItems="center"
-                        gap="3rem"
+                        gap="1rem"
                     >
-                        <IconButton
-                            onClick={() => dispatch(setMode())}
-                            sx={{ fontSize: "25px" }}
-                        >
-                            {theme.palette.mode === "dark" ? (
-                                <DarkMode sx={{ fontSize: "25px" }} />
-                            ) : (
-                                <LightMode
-                                    sx={{ color: dark, fontSize: "25px" }}
-                                />
-                            )}
-                        </IconButton>
+                        <MenuItem onClick={handleClose} sx={{ gap: "5rem" }}>
+                            <ListItemIcon>
+                                <Person sx={{ fontSize: "25px" }} />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary="Profile"
+                                secondary={fullName}
+                            />
+                        </MenuItem>
                         <Link
                             style={{ textDecoration: "none", color: "white" }}
                             to="/messenger"
                         >
-                            <IconButton>
-                                <Badge variant="dot" color="primary">
-                                    <Message sx={{ fontSize: "25px" }} />
-                                </Badge>
-                            </IconButton>
+                            <MenuItem onClick={handleClose} sx={{ gap: "5rem" }}>
+                                <ListItemIcon>
+                                    <Badge variant="dot" color="primary">
+                                        <Message sx={{ fontSize: "25px" }} />
+                                    </Badge>
+                                </ListItemIcon>
+                                <ListItemText primary="Messages" />
+                            </MenuItem>
                         </Link>
-                        <IconButton>
-                            <Badge badgeContent={newNotiCounts} color="primary">
-                                <Notifications
-                                    onClick={(e) => handleClick(e)}
-                                    sx={{ fontSize: "25px" }}
-                                />
-                            </Badge>
-                        </IconButton>
-                        <Help sx={{ fontSize: "25px" }} />
+                        <MenuItem onClick={handleClose}>
+                            <ListItemIcon>
+                                <Badge badgeContent={newNotiCounts} color="primary">
+                                    <Notifications
+                                        onClick={(e) => handleClick(e)}
+                                        sx={{ fontSize: "25px" }}
+                                    />
+                                </Badge>
+                            </ListItemIcon>
+                            <ListItemText primary="Notifications" />
+                        </MenuItem>
+                        <MenuItem onClose={handleClose} onClick={() => dispatch(setMode())}>
+                            <ListItemIcon>
+                                {theme.palette.mode === "dark" ? (
+                                    <DarkMode sx={{ fontSize: "25px" }} />
+                                ) : (
+                                    <LightMode
+                                        sx={{ color: dark, fontSize: "25px" }}
+                                    />
+                                )}
+                            </ListItemIcon>
+                            <ListItemText primary="Theme Mode" />
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                            <ListItemIcon>
+                                <Help sx={{ fontSize: "25px" }} />
+                            </ListItemIcon>
+                            <ListItemText primary="Help" />
+                        </MenuItem>
+                        <MenuItem onClose={handleClose} onClick={() => dispatch(setLogout())}>
+                                <ListItemIcon>
+                                    <Logout sx={{ fontSize: "25px" }} />
+                                </ListItemIcon>
+                                <ListItemText primary="Log Out" />
+                        </MenuItem>
+                        {/* 
                         <FormControl variant="standard" value={fullName}>
                             <Select
                                 value={fullName}
@@ -372,6 +409,7 @@ const Navbar = ({ socket, lowerBodyRef }) => {
                                 </MenuItem>
                             </Select>
                         </FormControl>
+                        */}
                     </FlexBetween>
                 </Box>
             )}
